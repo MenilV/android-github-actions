@@ -44,4 +44,4 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           files: |
-            app
+            app.zip
