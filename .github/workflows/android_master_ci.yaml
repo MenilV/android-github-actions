@@ -34,10 +34,12 @@ jobs:
           java-version: 1.8
       - name: Build debug APK
         run: bash ./gradlew assembleDebug --stacktrace
-      - name: Upload APK
-        uses: actions/upload-artifact@master
+#       - name: Upload APK
+#         uses: actions/upload-artifact@master
+#         with:
+#           name: app
+#           path: app/build/outputs/apk/debug/app-debug.apk
+      - name: Post to Slack
+        uses: wei/curl@v1
         with:
-          name: app
-          path: app/build/outputs/apk/debug/app-debug.apk
-      - name: Post to slack
-        run: bash curl -X POST -F 'file=@app/build/outputs/apk/debug/app-debug.apk' https://slack.com/api/files.upload?token=xoxb-571514117568-1263972076759-Qnggpaf8oiIHHKhJl7lctjV4&channels=android&title=app
+          args: -X POST -F 'file=@app/build/outputs/apk/debug/app-debug.apk' https://slack.com/api/files.upload?token=xoxb-571514117568-1263972076759-Qnggpaf8oiIHHKhJl7lctjV4&channels=android&title=app
