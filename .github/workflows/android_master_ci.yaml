@@ -40,7 +40,4 @@ jobs:
 #           name: app
 #           path: app/build/outputs/apk/debug/app-debug.apk
       - name: Post to Slack
-        run: curl -X POST -F 'file=@app/build/outputs/apk/debug/app-debug.apk' https://slack.com/api/files.upload?token=xoxb-571514117568-1263972076759-ln5DyoqCduZNeOaWYPteV9iD&channels=android&title=new_build&pretty=1
-#         uses: wei/curl@v1
-#         with:
-#           args: -X POST -F 'file=@app/build/outputs/apk/debug/app-debug.apk' https://slack.com/api/files.upload?token=xoxb-571514117568-1263972076759-Qnggpaf8oiIHHKhJl7lctjV4&channels=android&title=app
+        run: curl -X POST -F 'file=@app/build/outputs/apk/debug/app-debug.apk' https://slack.com/api/files.upload?token={{secrets.SLACK_TOKEN}}&channels=android&title=new_build&pretty=1
