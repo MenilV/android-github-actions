@@ -40,4 +40,4 @@ jobs:
 #           name: app
 #           path: app/build/outputs/apk/debug/app-debug.apk
       - name: Post to Slack
-        run: curl -X POST -F 'file=@app/build/outputs/apk/debug/app-debug.apk' https://slack.com/api/files.upload?token=$SLACK_TOKEN&channels=android&title=new_build&pretty=1
+        run: curl -X POST -F 'file=@app/build/outputs/apk/debug/app-debug.apk' https://slack.com/api/files.upload?token="$SLACK_TOKEN"&channels=android&title=new_build&pretty=1
