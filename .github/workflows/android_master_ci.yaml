@@ -44,5 +44,4 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           files: |
-            artifact.txt
-            README.md
+            app
