@@ -39,3 +39,10 @@ jobs:
         with:
           name: app
           path: app/build/outputs/apk/debug/app-debug.apk
+      - name: Get artifact links
+        uses: eine/tip@master
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          files: |
+            artifact.txt
+            README.md
