@@ -9,21 +9,8 @@ on:
       - 'master'
 
 jobs:
-#   test:
-#     name: Run Unit Tests
-#     runs-on: ubuntu-18.04
-
-#     steps:
-#       - uses: actions/checkout@master
-#       - name: set up JDK 1.8
-#         uses: actions/setup-java@master
-#         with:
-#           java-version: 1.8
-#       - name: Unit tests
-#         run: bash ./gradlew test --stacktrace
-
-  apk:
-    name: Generate APK
+  test:
+    name: Run Unit Tests
     runs-on: ubuntu-18.04
 
     steps:
@@ -32,13 +19,30 @@ jobs:
         uses: actions/setup-java@master
         with:
           java-version: 1.8
+      - name: Unit tests
+        run: bash ./gradlew test --stacktrace
+
+  apk:
+    name: Generate APK
+    runs-on: ubuntu-18.04
+
+    steps:
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+      - uses: actions/checkout@master
+      - name: set up JDK 1.8
+        uses: actions/setup-java@master
+        with:
+          java-version: 1.8
       - name: Build debug APK
         run: bash ./gradlew assembleDebug --stacktrace
-#       - name: Upload APK
-#         uses: actions/upload-artifact@master
-#         with:
-#           name: app
-#           path: app/build/outputs/apk/debug/app-debug.apk
+      - name: Upload APK
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ steps.extract_branch.outputs.branch }}.apk
+          path: app/build/outputs/apk/debug/app-debug.apk
       - name: Post to Slack
         run: |
-          curl -X POST -H 'Authorization: Bearer ${{ secrets.SLACK_TOKEN }}' -F 'file=@app/build/outputs/apk/debug/app-debug.apk' 'https://slack.com/api/files.upload?channels=android&title=new_build&pretty=1'
+          curl -X POST -H 'Authorization: Bearer ${{ secrets.SLACK_TOKEN }}' -F 'file=@app/build/outputs/apk/debug/app-debug.apk' 'https://slack.com/api/files.upload?channels=android&initial_comment=This%20build%20is%20ready%20for%20testing&filename=${{ steps.extract_branch.outputs.branch }}.apk&title=Android%20Build&pretty=1'
