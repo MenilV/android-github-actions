@@ -24,8 +24,8 @@ jobs:
     runs-on: ubuntu-18.04
 
     steps:
-      - name: Extract branch name
-        uses: nelonoel/branch-name@v1
+#      - name: Extract branch name
+      - uses: nelonoel/branch-name@v1
         shell: bash
         run: echo ${BRANCH_NAME}
 #        shell: bash
