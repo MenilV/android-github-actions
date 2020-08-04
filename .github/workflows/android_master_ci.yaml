@@ -45,4 +45,10 @@ jobs:
           path: app/build/outputs/apk/debug/app-debug.apk
       - name: Post to Slack
         run: |
-          curl -X POST -H 'Authorization: Bearer ${{ secrets.SLACK_TOKEN }}' -F 'file=@app/build/outputs/apk/debug/app-debug.apk' 'https://slack.com/api/files.upload?channels=android&initial_comment=This%20build%20is%20ready%20for%20testing&filename=${{ steps.extract_branch.outputs.branch }}.apk&title=Android%20Build&pretty=1'
+          curl -X POST -H 'Authorization: Bearer ${{ secrets.SLACK_TOKEN }}' 
+          -F 'file=@app/build/outputs/apk/debug/app-debug.apk'
+          -G 'https://slack.com/api/files.upload'
+          -d channels=android
+          -d initial_comment=This build is ready for testing
+          -d filename=${{ steps.extract_branch.outputs.branch }}.apk
+          -d title=Android Build: ${{ steps.extract_branch.outputs.branch }}
