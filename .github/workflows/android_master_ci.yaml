@@ -44,5 +44,5 @@ jobs:
           -F 'file=@app/build/outputs/apk/debug/app-debug.apk' \
           -F channels=android \
           -F 'initial_comment=PR for:* ${{ github.event.pull_request.title }} *' \
-          -F filename=app-debug.apk \
+          -F filename=${{ github.event.pull_request.head.ref }}.apk \
           -F 'title=Android Build: ${{ github.event.pull_request.head.ref }}'
