@@ -25,7 +25,8 @@ jobs:
 
     steps:
       - name: Extract branch name
-      - uses: nelonoel/branch-name@v1
+        uses: nelonoel/branch-name@v1
+        shell: bash
         run: echo ${BRANCH_NAME}
 #        shell: bash
 #        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
