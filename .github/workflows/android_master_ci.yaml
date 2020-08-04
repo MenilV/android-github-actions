@@ -38,7 +38,7 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@master
         with:
-          name: ${{ steps.extract_branch.outputs.branch }}.apk
+          name: app-debug.apk
           path: app/build/outputs/apk/debug/app-debug.apk
       - name: Post to Slack
         run: |
@@ -47,5 +47,5 @@ jobs:
           -F 'file=@app/build/outputs/apk/debug/app-debug.apk' \
           -F channels=android \
           -F 'initial_comment=PR for ${{ github.event.pull_request.title }}' \
-          -F filename=${{ steps.extract_branch.outputs.branch }}.apk \
-          -F 'title=Android Build: ${{ steps.extract_branch.outputs.branch }}'
+          -F filename=app-debug.apk \
+#          -F 'title=Android Build: ${{ steps.extract_branch.outputs.branch }}'
