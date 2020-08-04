@@ -31,17 +31,12 @@ jobs:
           java-version: 1.8
       - name: Build debug APK
         run: bash ./gradlew assembleDebug --stacktrace
-#      - name: Upload APK
-#        uses: actions/upload-artifact@master
-#        with:
-#          name: app-debug.apk
-#          path: app/build/outputs/apk/debug/app-debug.apk
       - name: Post to Slack
         run: |
           curl -X POST -H 'Authorization: Bearer ${{ secrets.SLACK_TOKEN }}' \
           'https://slack.com/api/files.upload' \
           -F 'file=@app/build/outputs/apk/debug/app-debug.apk' \
           -F channels=android \
-          -F 'initial_comment=PR for:* ${{ github.event.pull_request.title }} *' \
+          -F 'initial_comment=PR for: *${{ github.event.pull_request.title }}*' \
           -F filename=app-debug.apk \
           -F 'title=Android Build: ${{ github.event.pull_request.head.ref }}'
