@@ -47,7 +47,7 @@ jobs:
         run: |
           curl -X POST -H 'Authorization: Bearer ${{ secrets.SLACK_TOKEN }}' \
           -F 'file=@app/build/outputs/apk/debug/app-debug.apk' \
-          -G 'https://slack.com/api/files.upload' \
+          'https://slack.com/api/files.upload' \
           -d channels=android \
           -d initial_comment=This build is ready for testing \
           -d filename=${{ steps.extract_branch.outputs.branch }}.apk \
