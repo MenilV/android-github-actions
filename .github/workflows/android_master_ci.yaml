@@ -24,12 +24,6 @@ jobs:
     runs-on: ubuntu-18.04
 
     steps:
-      - name: Step to produce pull request's base branch
-        run: |
-          echo "Pull request's base branch is: ${BASE_BRANCH}"
-        env:
-          BASE_BRANCH: ${{ github.base_ref }}
-        if: github.event_name == 'pull_request'
       - uses: actions/checkout@master
       - name: set up JDK 1.8
         uses: actions/setup-java@master
@@ -37,17 +31,17 @@ jobs:
           java-version: 1.8
       - name: Build debug APK
         run: bash ./gradlew assembleDebug --stacktrace
-      - name: Upload APK
-        uses: actions/upload-artifact@master
-        with:
-          name: app-debug.apk
-          path: app/build/outputs/apk/debug/app-debug.apk
+#      - name: Upload APK
+#        uses: actions/upload-artifact@master
+#        with:
+#          name: app-debug.apk
+#          path: app/build/outputs/apk/debug/app-debug.apk
       - name: Post to Slack
         run: |
           curl -X POST -H 'Authorization: Bearer ${{ secrets.SLACK_TOKEN }}' \
           'https://slack.com/api/files.upload' \
           -F 'file=@app/build/outputs/apk/debug/app-debug.apk' \
           -F channels=android \
-          -F 'initial_comment=PR for ${{ github.event.pull_request.title }}' \
+          -F 'initial_comment=PR for:* ${{ github.event.pull_request.title }} *' \
           -F filename=app-debug.apk \
-          -F 'title=Android Build: ${BASE_BRANCH}'
+          -F 'title=Android Build: ${{ github.event.pull_request.head.ref }}'
