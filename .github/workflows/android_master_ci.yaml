@@ -49,6 +49,6 @@ jobs:
           'https://slack.com/api/files.upload' \
           -F 'file=@app/build/outputs/apk/debug/app-debug.apk' \
           -F channels=android \
-          -F initial_comment=This build is ready for testing \
+          -F 'initial_comment=This build is ready for testing' \
           -F filename=${{ steps.extract_branch.outputs.branch }}.apk \
-          -F title=Android Build: ${{ steps.extract_branch.outputs.branch }}
+          -F 'title=Android Build: ${{ steps.extract_branch.outputs.branch }}'
